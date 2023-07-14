@@ -1,0 +1,40 @@
+// app global css in SCSS form
+// app global css in SCSS form
+@font-face {
+  font-family: "QuickSand";
+  src: url(./fonts/QuickSand-VariableFont_wght.ttf);
+}
+
+body {
+  font-family: "QuickSand", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+.text-deployed {
+  color: #2196f3;
+}
+.bg-deployed {
+  color: #2196f3;
+}
+
+.list-enter-active {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: all ease;
+}
+.list-item {
+  transition-delay: 4s;
+  transition: all 2s ease;
+}
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+  transition-delay: 4s;
+  transition: all 2s ease;
+}
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
