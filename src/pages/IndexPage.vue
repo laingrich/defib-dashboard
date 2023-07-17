@@ -11,6 +11,11 @@
           v-for="cabinet in cabinets"
           :key="cabinet.id"
           :lat-lng="cabinet.location">
+            <l-icon
+              icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
+              shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
+              :iconAnchor="[12, 41]">
+            </l-icon>
         </l-marker>
         <l-control position="topleft" >
           <div class="row justify-start">
@@ -23,7 +28,7 @@
                   v-for="deployment in deployments"
                   :key="deployment.id"
                   :color="deployment.color"
-                  :title="deployment.name"
+                  :title="deployment.area + ' - ' + deployment.name"
                   :subtitle="deployment.date"
                 >
                   <div>
@@ -87,7 +92,7 @@
 <script>
 import { defineComponent } from 'vue'
 import 'leaflet/dist/leaflet.css'
-import { LMap, LTileLayer, LMarker, LControl } from '@vue-leaflet/vue-leaflet'
+import { LMap, LTileLayer, LMarker, LControl, LIcon } from '@vue-leaflet/vue-leaflet'
 import { latLng } from 'leaflet'
 // delete this line
 import { cabinetStream, deploymentStream } from '../boot/firebase'
@@ -100,7 +105,8 @@ export default defineComponent({
     LMap,
     LTileLayer,
     LMarker,
-    LControl
+    LControl,
+    LIcon
   },
 
   data () {
@@ -190,6 +196,7 @@ export default defineComponent({
           id: doc.id,
           ...doc.data(),
           name: cabinet.title,
+          area: cabinet.area,
           color: cabinet.status !== 'On Standby' ? 'blue' : 'green'
         }
       })
