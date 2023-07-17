@@ -1,9 +1,9 @@
 <template>
   <q-page>
     <div style="height:600px; width:800px">
-    <l-map ref="map" :zoom="zoom" :center="mapCenter">
+    <l-map ref="map" :zoom="zoom" :center="mapCenter" :options="{zoomControl: false, dragging: false, boxZoom: false, scrollWheelZoom: false}">
       <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
         layer-type="base"
         name="OpenStreetMap"
       ></l-tile-layer>
@@ -86,7 +86,10 @@ import { defineComponent } from 'vue'
 import 'leaflet/dist/leaflet.css'
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet'
 import { latLng } from 'leaflet'
-import { cabinetStream, eventStream, deploymentStream } from '../boot/firebase'
+// delete this line
+import { cabinetStream, deploymentStream } from '../boot/firebase'
+// and uncomment this to enable events
+// import { cabinetStream, eventStream, deploymentStream } from '../boot/firebase'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -150,8 +153,7 @@ export default defineComponent({
           msg: 'Temperature high',
           iconColor: 'blue',
           timestamp: '12/7/2021 12:00'
-        }
-      ],
+        }],
       displayedEvents: [],
       cabinets: []
     }
@@ -166,15 +168,16 @@ export default defineComponent({
         }
       })
     })
-    eventStream(snapshot => {
-      console.log(snapshot)
-      this.events = snapshot.docs.map(doc => {
-        return {
-          id: doc.id,
-          ...doc.data()
-        }
-      })
-    })
+    this.updateList()
+    // eventStream(snapshot => {
+    //   console.log(snapshot)
+    //   this.events = snapshot.docs.map(doc => {
+    //     return {
+    //       id: doc.id,
+    //       ...doc.data()
+    //     }
+    //   })
+    // })
     deploymentStream(snapshot => {
       console.log(snapshot)
       this.deployments = snapshot.docs.map(doc => {
