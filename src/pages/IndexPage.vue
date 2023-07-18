@@ -58,7 +58,7 @@
                     :key="event.id"
                     class="list-item">
                     <q-item-section avatar>
-                      <q-icon :color="event.iconColor" :name="event.icon" />
+                      <q-icon :name="getIcon(event.event).icon" :color="getIcon(event.event).iconColor" />
                     </q-item-section>
                     <q-item-section>
                       <q-item-label>{{ event.event }}</q-item-label>
@@ -119,6 +119,14 @@ export default defineComponent({
     LIcon
   },
 
+  computed: {
+    iconData () {
+      return this.events.map(event => {
+        return this.iconGetter(event.event)
+      })
+    }
+  },
+
   data () {
     return {
       zoom: 10,
@@ -126,7 +134,79 @@ export default defineComponent({
       deployments: [],
       events: [],
       displayedEvents: [],
-      cabinets: []
+      cabinets: [],
+      iconGroups: [
+        {
+          event: 'Door Closed',
+          icon: 'door_front',
+          iconColor: 'green'
+        },
+        {
+          event: 'Door Open',
+          icon: 'door_front',
+          iconColor: 'blue'
+        },
+        {
+          event: 'Interior Light Off',
+          icon: 'light',
+          iconColor: 'green'
+        },
+        {
+          event: 'Interior Light On',
+          icon: 'light',
+          iconColor: 'blue'
+        },
+        {
+          event: 'Heater On',
+          icon: 'ac_unit',
+          iconColor: 'blue'
+        },
+        {
+          event: 'Heater Off',
+          icon: 'ac_unit',
+          iconColor: 'green'
+        },
+        {
+          event: 'Temperature Acceptable',
+          icon: 'thermostat',
+          iconColor: 'green'
+        },
+        {
+          event: 'Temperature Alert - too cold',
+          icon: 'thermostat',
+          iconColor: 'blue'
+        },
+        {
+          event: 'Check Complete',
+          icon: 'sentiment_satisfied',
+          iconColor: 'green'
+        },
+        {
+          event: 'Started Monitor',
+          icon: 'done',
+          iconColor: 'green'
+        },
+        {
+          event: 'Connection Established',
+          icon: 'wifi',
+          iconColor: 'green'
+        },
+        {
+          event: 'Lost Connection',
+          icon: 'wifi',
+          iconColor: 'blue'
+        },
+        {
+          event: 'Defib Present',
+          icon: 'favorite',
+          iconColor: 'green'
+        },
+        {
+          event: 'Defib Removed',
+          icon: 'favorite',
+          iconColor: 'blue'
+        }
+      ]
     }
   },
   mounted () {
@@ -145,7 +225,7 @@ export default defineComponent({
           ...doc.data()
         }
       })
-      console.log(this.events)
+      // console.log(this.events)
     })
     deploymentStream(snapshot => {
       this.deployments = snapshot.docs.map(doc => {
@@ -162,6 +242,10 @@ export default defineComponent({
     })
   },
   methods: {
+    getIcon (event) {
+      const { icon = 'favorite_border', iconColor = 'blue' } = this.iconGroups.find(group => group.event === event) || {}
+      return { icon, iconColor }
+    }
   }
 })
 </script>
