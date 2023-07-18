@@ -16,6 +16,9 @@ const db = function () {
   return _db
 }
 
-export const cabinetStream = (cb) => onSnapshot(query(collection(db(), 'cabinets'), where('installed', '==', true)), cb)
+// deployments
+export const deploymentStream = (cb) => onSnapshot(query(collectionGroup(db(), 'events'), where('event', '==', 'DEPLOYED'), orderBy('timestamp', 'desc'), limit(6)), cb)
+// events
 export const eventStream = (cb) => onSnapshot(query(collectionGroup(db(), 'events'), orderBy('timestamp', 'desc'), limit(5)), cb)
-export const deploymentStream = (cb) => onSnapshot(query(collectionGroup(db(), 'events'), where('event', '==', 'DEPLOYED'), orderBy('timestamp', 'desc'), limit(5)), cb)
+// markers
+export const cabinetStream = (cb) => onSnapshot(query(collection(db(), 'cabinets'), where('installed', '==', true)), cb)
