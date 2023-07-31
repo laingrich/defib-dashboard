@@ -1,7 +1,7 @@
 {
   "name": "defib-dashboard",
   "version": "0.0.1",
-  "description": "A Quasar Project",
+  "description": "A static defib-dashboard",
   "productName": "defib-dashboard",
   "author": "richard laing <114079626+richlaing@users.noreply.github.com>",
   "private": true,

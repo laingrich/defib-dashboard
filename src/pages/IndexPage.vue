@@ -3,7 +3,7 @@
     <div style="height:1030px; width:1920px">
       <l-map ref="map" :zoom="zoom" :center="mapCenter" :options="{zoomControl: false, dragging: false, boxZoom: false, scrollWheelZoom: false}">
         <l-tile-layer
-          url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+          url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=6806caf9-bd2d-4a3c-afc9-e93da7bf8a3a"
           layer-type="base"
           name="OpenStreetMap"
         ></l-tile-layer>
@@ -104,9 +104,6 @@ import { defineComponent } from 'vue'
 import 'leaflet/dist/leaflet.css'
 import { LMap, LTileLayer, LMarker, LControl, LIcon } from '@vue-leaflet/vue-leaflet'
 import { latLng } from 'leaflet'
-// commment this line
-// import { cabinetStream, deploymentStream } from '../boot/firebase'
-// and uncomment this to enable events
 import { cabinetStream, eventStream, deploymentStream } from '../boot/firebase'
 
 export default defineComponent({
@@ -225,7 +222,6 @@ export default defineComponent({
           ...doc.data()
         }
       })
-      // console.log(this.events)
     })
     deploymentStream(snapshot => {
       this.deployments = snapshot.docs.map(doc => {
