@@ -6,7 +6,6 @@ q-page
       :zoom="zoom"
       :center="mapCenter"
       :options="{zoomControl: false, dragging: false, boxZoom: false, scrollWheelZoom: false}"
-      @ready="mapReady"
     )
       l-tile-layer(
         url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=6806caf9-bd2d-4a3c-afc9-e93da7bf8a3a"
@@ -28,24 +27,25 @@ q-page
         //-   :fill-opacity="0.8"
         //-   :weight="1"
         //- )
-        l-icon(
-          icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
-          shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
-          :iconAnchor="[12, 41]"
-          :options="{ iconSize: [25, 41]}"
-        )
-      l-marker(
-        v-for="deployment in deployments"
-        :key="deployment.id"
-        :lat-lng="deployment.location"
-        :zIndexOffset="1000"
-      )
-        l-icon(
-          icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png"
-          shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
-          :iconAnchor="[12, 41]"
-          :options="{ iconSize: [25, 41]}"
-        )
+      //-   l-icon(
+      //-     icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
+      //-     shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
+      //-     :iconAnchor="[12, 41]"
+      //-     :options="{ iconSize: [25, 41]}"
+      //-   )
+      //- l-marker(
+      //-   v-for="deployment in deployments"
+      //-   :key="deployment.id"
+      //-   :lat-lng="deployment.location"
+      //-   :zIndexOffset="1000"
+      //-   @ready="bounce"
+      //- )
+      //-   l-icon(
+      //-     icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png"
+      //-     shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
+      //-     :iconAnchor="[12, 41]"
+      //-     :options="{ iconSize: [25, 41]}"
+      //-   )
       l-control(position="topleft")
         div.row.justify-start
           div(class="q-px-xl q-pt-lg q-ml-md")
@@ -199,8 +199,7 @@ export default defineComponent({
           icon: 'favorite',
           iconColor: 'blue'
         }
-      ],
-      bouncing: true
+      ]
     }
   },
   mounted () {
@@ -241,13 +240,7 @@ export default defineComponent({
     },
     bounce (event) {
       console.log(event)
-      event.bounce(3)
-    },
-    mapReady () {
-      console.log(this.$refs.map)
-      // if (this.$refs.map.leafletObject) {
-      //   this.$refs.map.leafletObject.addInitHook('addHandler', 'bouncing', L.BouncingMarker)
-      // }
+      event.bounce(1)
     }
   }
 })
