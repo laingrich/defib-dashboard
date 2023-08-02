@@ -34,18 +34,18 @@ q-page
           :iconAnchor="[12, 41]"
           :options="{ iconSize: [25, 41]}"
         )
-      //- l-marker(
-      //-   v-for="deployment in deployments"
-      //-   :key="deployment.id"
-      //-   :lat-lng="deployment.location"
-      //-   :zIndexOffset="1000"
-      //- )
-        //- l-icon(
-        //-   icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png"
-        //-   shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
-        //-   :iconAnchor="[12, 41]"
-        //-   :options="{ iconSize: [25, 41]}"
-        //- )
+      l-marker(
+        v-for="deployment in deployments"
+        :key="deployment.id"
+        :lat-lng="deployment.location"
+        :zIndexOffset="1000"
+      )
+        l-icon(
+          icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png"
+          shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
+          :iconAnchor="[12, 41]"
+          :options="{ iconSize: [25, 41]}"
+        )
       l-control(position="topleft")
         div.row.justify-start
           div(class="q-px-xl q-pt-lg q-ml-md")
