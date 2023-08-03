@@ -17,21 +17,14 @@ q-page
         v-for="cabinet in cabinets"
         :key="cabinet.id + cabinet.lastreport"
         :lat-lng="cabinet.location"
-        @ready="bounce"
       )
-        //- l-circle(
-        //-   :lat-lng="cabinet.location"
-        //-   :radius="400"
-        //-   :color="cabinet.status==='DEPLOYED' ? 'blue' : 'green'"
-        //-   :fill-color="cabinet.color"
-        //-   :fill-opacity="0.8"
-        //-   :weight="1"
-        //- )
-        l-icon(
-          :icon-url="cabinet.status==='In Use' ? blueIcon : greenIcon"
-          :shadowUrl="shadowURL"
-          :iconAnchor="[12, 41]"
-          :options="{ iconSize: [25, 41]}"
+        l-circle(
+          :lat-lng="cabinet.location"
+          :radius="cabinet.status==='In Use' ? 600 : 300"
+          :color="cabinet.status==='In Use' ? 'blue' : 'green'"
+          :fill-color="cabinet.status==='In Use' ? 'blue' : 'green'"
+          :fill-opacity="0.8"
+          :weight="1"
         )
       l-control(position="topleft")
         div.row.justify-start
