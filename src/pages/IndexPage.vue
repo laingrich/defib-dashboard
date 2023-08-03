@@ -27,25 +27,12 @@ q-page
         //-   :fill-opacity="0.8"
         //-   :weight="1"
         //- )
-      //-   l-icon(
-      //-     icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
-      //-     shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
-      //-     :iconAnchor="[12, 41]"
-      //-     :options="{ iconSize: [25, 41]}"
-      //-   )
-      //- l-marker(
-      //-   v-for="deployment in deployments"
-      //-   :key="deployment.id"
-      //-   :lat-lng="deployment.location"
-      //-   :zIndexOffset="1000"
-      //-   @ready="bounce"
-      //- )
-      //-   l-icon(
-      //-     icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png"
-      //-     shadowUrl="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png"
-      //-     :iconAnchor="[12, 41]"
-      //-     :options="{ iconSize: [25, 41]}"
-      //-   )
+        l-icon(
+          :icon-url="cabinet.status==='In Use' ? blueIcon : greenIcon"
+          :shadowUrl="shadowURL"
+          :iconAnchor="[12, 41]"
+          :options="{ iconSize: [25, 41]}"
+        )
       l-control(position="topleft")
         div.row.justify-start
           div(class="q-px-xl q-pt-lg q-ml-md")
@@ -96,7 +83,14 @@ q-page
 <script>
 import { defineComponent } from 'vue'
 import 'leaflet/dist/leaflet.css'
-import { LMap, LTileLayer, LMarker, LControl, LIcon, LCircle } from '@vue-leaflet/vue-leaflet'
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+  LControl,
+  LIcon,
+  LCircle
+} from '@vue-leaflet/vue-leaflet'
 import { latLng } from 'leaflet'
 import { cabinetStream, eventStream, deploymentStream } from '../boot/firebase'
 import 'leaflet.smooth_marker_bouncing/dist/bundle'
@@ -114,7 +108,7 @@ export default defineComponent({
 
   computed: {
     iconData () {
-      return this.events.map(event => {
+      return this.events.map((event) => {
         return this.iconGetter(event.event)
       })
     }
@@ -128,6 +122,8 @@ export default defineComponent({
       events: [],
       displayedEvents: [],
       cabinets: [],
+      blueIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+      greenIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
       iconGroups: [
         {
           event: 'Door Closed',
@@ -199,47 +195,69 @@ export default defineComponent({
           icon: 'favorite',
           iconColor: 'blue'
         }
-      ]
+      ],
+      shadowURL: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
     }
   },
+
   mounted () {
     cabinetStream(snapshot => {
-      this.cabinets = snapshot.docs.map(doc => {
+      const changes = snapshot.docChanges()
+
+      changes.forEach(change => {
+        const docData = {
+          id: change.doc.id,
+          ...change.doc.data()
+        }
+
+        if (change.type === 'added') {
+          this.cabinets.push(docData)
+        }
+        if (change.type === 'modified') {
+          const index = this.cabinets.findIndex(cabinet => cabinet.id === change.doc.id)
+          //
+          if (index !== -1) { // if the cabinet exists (previous code wil return -1 if no elements are found))
+            this.cabinets[index] = docData
+          }
+        }
+        if (change.type === 'removed') {
+          this.cabinets = this.cabinets.filter(cabinet => cabinet.id !== change.doc.id)
+        }
+      })
+    })
+
+    eventStream((snapshot) => {
+      this.events = snapshot.docs.map((doc) => {
         return {
           id: doc.id,
           ...doc.data()
         }
       })
     })
-    eventStream(snapshot => {
-      this.events = snapshot.docs.map(doc => {
-        return {
-          id: doc.id,
-          ...doc.data()
-        }
-      })
-    })
-    deploymentStream(snapshot => {
-      this.deployments = snapshot.docs.map(doc => {
-        const cabinet = this.cabinets.find(cabinet => cabinet.id === doc.ref.parent.parent.id)
+    deploymentStream((snapshot) => {
+      this.deployments = snapshot.docs.map((doc) => {
+        const cabinet = this.cabinets.find(
+          (cabinet) => cabinet.id === doc.ref.parent.parent.id
+        )
         return {
           id: doc.id,
           ...doc.data(),
           name: cabinet?.title ?? '',
           area: cabinet?.area ?? '',
           location: cabinet?.location ?? '',
-          color: cabinet?.status !== 'On Standby' ? 'blue' : 'green'
+          color: cabinet?.status === 'In Use' ? 'blue' : 'green'
         }
       })
     })
   },
+
   methods: {
     getIcon (event) {
-      const { icon = 'favorite_border', iconColor = 'blue' } = this.iconGroups.find(group => group.event === event) || {}
+      const { icon = 'favorite_border', iconColor = 'blue' } =
+        this.iconGroups.find((group) => group.event === event) || {}
       return { icon, iconColor }
     },
     bounce (event) {
-      console.log(event)
       event.bounce(1)
     }
   }
