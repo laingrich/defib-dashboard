@@ -5,7 +5,7 @@ q-page
       ref="map"
       :zoom="zoom"
       :center="mapCenter"
-      :options="{zoomControl: false, dragging: false, boxZoom: false, scrollWheelZoom: false}"
+      :options="{zoomControl: false, dragging: false, boxZoom: false, scrollWheelZoom: true}"
     )
       l-tile-layer(
         url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=6806caf9-bd2d-4a3c-afc9-e93da7bf8a3a"
@@ -18,14 +18,12 @@ q-page
         :key="cabinet.id + cabinet.lastreport"
         :lat-lng="cabinet.location"
       )
-        l-circle(
-          :lat-lng="cabinet.location"
-          :radius="cabinet.status==='In Use' ? 600 : 300"
-          :color="cabinet.status==='In Use' ? 'blue' : 'green'"
-          :fill-color="cabinet.status==='In Use' ? 'blue' : 'green'"
-          :fill-opacity="0.8"
-          :weight="1"
+        l-icon(
+          :icon-url="greenDotIcon"
+          class-name="pulse-ring"
+          :icon-size="iconSize"
         )
+
       l-control(position="topleft")
         div.row.justify-start
           div(class="q-px-xl q-pt-lg q-ml-md")
@@ -86,7 +84,6 @@ import {
 } from '@vue-leaflet/vue-leaflet'
 import { latLng } from 'leaflet'
 import { cabinetStream, eventStream, deploymentStream } from '../boot/firebase'
-import 'leaflet.smooth_marker_bouncing/dist/bundle'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -117,6 +114,7 @@ export default defineComponent({
       cabinets: [],
       blueIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
       greenIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+      greenDotIcon: 'icons/greenDotIcon.png',
       iconGroups: [
         {
           event: 'Door Closed',
@@ -189,6 +187,7 @@ export default defineComponent({
           iconColor: 'blue'
         }
       ],
+      iconSize: [30, 30],
       shadowURL: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
     }
   },
@@ -249,9 +248,6 @@ export default defineComponent({
       const { icon = 'favorite_border', iconColor = 'blue' } =
         this.iconGroups.find((group) => group.event === event) || {}
       return { icon, iconColor }
-    },
-    bounce (event) {
-      event.bounce(1)
     }
   }
 })
