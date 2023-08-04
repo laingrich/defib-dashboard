@@ -15,6 +15,7 @@
     "@quasar/cli": "^2.2.1",
     "@quasar/extras": "^1.16.4",
     "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "animate.css": "^4.1.1",
     "firebase": "^10.0.0",
     "leaflet": "^1.9.4",
     "leaflet.smooth_marker_bouncing": "^3.0.3",

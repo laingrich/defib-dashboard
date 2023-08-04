@@ -36,46 +36,32 @@ body {
   bottom: 0;
   width: 100%;
 }
-.pulse-marker {
 
-  border-radius: 50%;
-  background: green;
-  position: relative;
+.greenDotIconPulse {
+  width: 10px;
+  height: 10px;
+  opacity: 0.8;
   animation: pulse 3s 1;
-}
+  }
 
-.pulse-ring {
-  border: 2px solid green;
+.blueDotIconPulse {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background-color: transparent;
-  animation: pulse 1.5s 1;
+  animation: pulse 3s infinite;
   }
 
 @keyframes pulse {
   0% {
-    opacity: 1;
+    opacity: .8;
   }
   50% {
-    opacity: 0.2;
+    opacity: 0.1;
+    width: 20px;
+    height: 20px;
   }
   100% {
-    opacity: 1;
-  }
-}
-
-pulse-ring:nth-child(3) {
-  animation-delay: 0.5s;
- }
-
-pulse-ring:nth-child(4) {
-  animation-delay: 1s;
-}
-
-@keyframes pulse-ring {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(2);
+    opacity: .8;
   }
 }

@@ -19,10 +19,9 @@ q-page
         :lat-lng="cabinet.location"
       )
         l-icon(
-          :icon-url="greenDotIcon"
-          class-name="pulse-ring"
-          :icon-size="iconSize"
-        )
+          :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
+          :class-name="cabinet.status==='In Use' ? blueDotIconPulse : greenDotIconPulse"
+          )
 
       l-control(position="topleft")
         div.row.justify-start
@@ -112,9 +111,12 @@ export default defineComponent({
       events: [],
       displayedEvents: [],
       cabinets: [],
-      blueIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
-      greenIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+      // blueIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+      // greenIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
       greenDotIcon: 'icons/greenDotIcon.png',
+      blueDotIcon: 'icons/blueDotIcon.png',
+      greenDotIconPulse: 'greenDotIconPulse',
+      blueDotIconPulse: 'blueDotIconPulse',
       iconGroups: [
         {
           event: 'Door Closed',
@@ -186,9 +188,8 @@ export default defineComponent({
           icon: 'favorite',
           iconColor: 'blue'
         }
-      ],
-      iconSize: [30, 30],
-      shadowURL: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
+      ]
+      // shadowURL: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
     }
   },
 
