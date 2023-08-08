@@ -20,8 +20,8 @@ q-page
       )
         l-icon(
           :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
-          :icon-size="[50, 50]"
-          :icon-anchor="[25, 25]"
+          :icon-size="cabinet.status==='In Use' ? [100, 100] : [50, 50]"
+          :icon-anchor="cabinet.status==='In Use' ? [50, 50] : [25, 25]"
           :class-name="cabinet.status==='In Use' ? infinitePing : ping"
           )
       l-marker(
@@ -31,8 +31,8 @@ q-page
       )
         l-icon(
           :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
-          :icon-size="[50, 50]"
-          :icon-anchor="[25, 25]"
+          :icon-size="cabinet.status==='In Use' ? [100, 100] : [50, 50]"
+          :icon-anchor="cabinet.status==='In Use' ? [50, 50] : [25, 25]"
           :class-name="cabinet.status==='In Use' ? infinitePing2 : ping2"
           )
       l-marker(
