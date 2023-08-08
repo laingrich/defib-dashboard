@@ -19,10 +19,10 @@ q-page
         :lat-lng="cabinet.location"
       )
         l-icon(
-          :icon-url="greenDotIcon"
+          :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
           :icon-size="[100, 100]"
           :icon-anchor="[50, 50]"
-          :class-name="ping"
+          :class-name="cabinet.status==='In Use' ? infinitePing : ping"
           )
       l-marker(
         v-for="cabinet in cabinets"
@@ -30,10 +30,10 @@ q-page
         :lat-lng="cabinet.location"
       )
         l-icon(
-          :icon-url="greenDotIcon"
+          :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
           :icon-size="[100, 100]"
           :icon-anchor="[50, 50]"
-          :class-name="ping2"
+          :class-name="cabinet.status==='In Use' ? infinitePing2 : ping2"
           )
       l-marker(
         v-for="cabinet in cabinets"
@@ -41,7 +41,7 @@ q-page
         :lat-lng="cabinet.location"
       )
         l-icon(
-          :icon-url="greenDotIcon"
+          :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
           :icon-size="[10, 10]"
           :icon-anchor="[5, 5]"
           :class-name="icon"
@@ -129,7 +129,7 @@ export default defineComponent({
   data () {
     return {
       zoom: 10,
-      mapCenter: latLng(50.3, -5.2),
+      mapCenter: latLng(50.4, -5.2),
       deployments: [],
       events: [],
       displayedEvents: [],
@@ -139,6 +139,8 @@ export default defineComponent({
       ping: 'ping',
       ping2: 'ping2',
       icon: 'icon',
+      infinitePing: 'infinitePing',
+      infinitePing2: 'infinitePing2',
       iconGroups: [
         {
           event: 'Door Closed',
