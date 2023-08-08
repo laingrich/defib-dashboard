@@ -17,7 +17,7 @@ const db = function () {
 }
 
 // deployments
-export const deploymentStream = (cb) => onSnapshot(query(collectionGroup(db(), 'events'), where('event', '==', 'DEPLOYED'), orderBy('timestamp', 'desc'), limit(6)), cb)
+export const deploymentStream = (cb) => onSnapshot(query(collectionGroup(db(), 'events'), where('event', '==', 'DEPLOYED'), orderBy('timestamp', 'desc'), limit(20)), cb)
 // events
 export const eventStream = (cb) => onSnapshot(query(collectionGroup(db(), 'events'), orderBy('timestamp', 'desc'), limit(5)), cb)
 // markers

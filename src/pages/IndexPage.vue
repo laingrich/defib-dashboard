@@ -250,20 +250,38 @@ export default defineComponent({
         }
       })
     })
+
     deploymentStream((snapshot) => {
-      this.deployments = snapshot.docs.map((doc) => {
-        const cabinet = this.cabinets.find(
-          (cabinet) => cabinet.id === doc.ref.parent.parent.id
-        )
-        return {
-          id: doc.id,
-          ...doc.data(),
-          name: cabinet?.title ?? '',
-          area: cabinet?.area ?? '',
-          location: cabinet?.location ?? '',
-          color: cabinet?.status === 'In Use' ? 'blue' : 'green'
-        }
-      })
+      const addedCabinetsByDate = {} // Object to track added cabinets by date
+      console.log('deployments', snapshot.docs)
+      this.deployments = snapshot.docs
+        .map((doc) => {
+          const data = doc.data()
+          const date = data.date // Assuming data includes a 'date' property
+          const cabinet = this.cabinets.find((cabinet) => cabinet.id === doc.ref.parent.parent.id)
+
+          if (!addedCabinetsByDate[date]) {
+            addedCabinetsByDate[date] = new Set()
+          }
+
+          if (addedCabinetsByDate[date].has(cabinet.id)) {
+            return null // Skip this cabinet if it's already been added for this date
+          }
+
+          addedCabinetsByDate[date].add(cabinet.id)
+          console.log('addedCabinetsByDate', addedCabinetsByDate)
+
+          return {
+            id: doc.id,
+            ...data,
+            name: cabinet?.title ?? '',
+            area: cabinet?.area ?? '',
+            location: cabinet?.location ?? '',
+            color: cabinet?.status === 'In Use' ? 'blue' : 'green'
+          }
+        })
+        .filter((deployment) => deployment !== null) // Remove any null entries
+        .slice(0, 6)
     })
   },
 
