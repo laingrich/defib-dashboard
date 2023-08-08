@@ -5,7 +5,7 @@ q-page
       ref="map"
       :zoom="zoom"
       :center="mapCenter"
-      :options="{zoomControl: false, dragging: false, boxZoom: false, scrollWheelZoom: true}"
+      :options="{zoomControl: false, dragging: false, boxZoom: false, scrollWheelZoom: false}"
     )
       l-tile-layer(
         url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=6806caf9-bd2d-4a3c-afc9-e93da7bf8a3a"
@@ -13,17 +13,6 @@ q-page
         name="OpenStreetMap"
         attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a>'
       )
-      l-marker(
-        v-for="cabinet in cabinets"
-        :key="cabinet.id + cabinet.lastreport"
-        :lat-lng="cabinet.location"
-      )
-        l-icon(
-          :icon-url="greenDotIcon"
-          :icon-size="[10, 10]"
-          :icon-anchor="[5, 5]"
-          :class-name="icon"
-          )
       l-marker(
         v-for="cabinet in cabinets"
         :key="cabinet.id + cabinet.lastreport"
@@ -45,6 +34,17 @@ q-page
           :icon-size="[100, 100]"
           :icon-anchor="[50, 50]"
           :class-name="ping2"
+          )
+      l-marker(
+        v-for="cabinet in cabinets"
+        :key="cabinet.id + cabinet.lastreport"
+        :lat-lng="cabinet.location"
+      )
+        l-icon(
+          :icon-url="greenDotIcon"
+          :icon-size="[10, 10]"
+          :icon-anchor="[5, 5]"
+          :class-name="icon"
           )
       l-control(position="topleft")
         div.row.justify-start
