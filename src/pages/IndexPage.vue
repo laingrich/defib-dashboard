@@ -19,10 +19,33 @@ q-page
         :lat-lng="cabinet.location"
       )
         l-icon(
-          :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
-          :class-name="cabinet.status==='In Use' ? blueDotIconPulse : greenDotIconPulse"
+          :icon-url="greenDotIcon"
+          :icon-size="[10, 10]"
+          :icon-anchor="[5, 5]"
+          :class-name="icon"
           )
-
+      l-marker(
+        v-for="cabinet in cabinets"
+        :key="cabinet.id + cabinet.lastreport"
+        :lat-lng="cabinet.location"
+      )
+        l-icon(
+          :icon-url="greenDotIcon"
+          :icon-size="[100, 100]"
+          :icon-anchor="[50, 50]"
+          :class-name="ping"
+          )
+      l-marker(
+        v-for="cabinet in cabinets"
+        :key="cabinet.id + cabinet.lastreport"
+        :lat-lng="cabinet.location"
+      )
+        l-icon(
+          :icon-url="greenDotIcon"
+          :icon-size="[100, 100]"
+          :icon-anchor="[50, 50]"
+          :class-name="ping2"
+          )
       l-control(position="topleft")
         div.row.justify-start
           div(class="q-px-xl q-pt-lg q-ml-md")
@@ -111,12 +134,11 @@ export default defineComponent({
       events: [],
       displayedEvents: [],
       cabinets: [],
-      // blueIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
-      // greenIcon: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
       greenDotIcon: 'icons/greenDotIcon.png',
       blueDotIcon: 'icons/blueDotIcon.png',
-      greenDotIconPulse: 'greenDotIconPulse',
-      blueDotIconPulse: 'blueDotIconPulse',
+      ping: 'ping',
+      ping2: 'ping2',
+      icon: 'icon',
       iconGroups: [
         {
           event: 'Door Closed',
@@ -189,7 +211,6 @@ export default defineComponent({
           iconColor: 'blue'
         }
       ]
-      // shadowURL: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
     }
   },
 
