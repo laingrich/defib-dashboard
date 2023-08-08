@@ -90,7 +90,7 @@ q-page
                   )
                     div(class="text-subtitle2") Total Defibs
           l-control(position="bottomright")
-            img(src="../assets/tango3-innovation-for-hire.png" style="width: 200px; height: 200px")
+            img(src="../assets/tango3-innovation-for-hire.png" style="width: 200px; height: 200px; opacity: 0.6")
 </template>
 
 <script>
