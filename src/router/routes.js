@@ -3,11 +3,8 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-<<<<<<< HEAD
       { path: '', component: () => import('pages/IndexPage.vue') }
-=======
-      { path: '', component: () => import('pages/IndexPage.vue') },
->>>>>>> refs/remotes/origin/main
+
     ]
   },
 
