@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "defib-dashboard",
     "public": "dist/spa",
     "ignore": [
       "firebase.json",
