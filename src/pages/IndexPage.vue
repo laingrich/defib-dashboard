@@ -11,7 +11,7 @@ q-page
         url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=6806caf9-bd2d-4a3c-afc9-e93da7bf8a3a"
         layer-type="base"
         name="OpenStreetMap"
-        attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a>'
+        attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps </a>&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>&copy; <a href="https://www.openstreetmap.org/about/" target="_blank">OpenStreetMap contributors</a>'
       )
       l-marker(
         v-for="cabinet in cabinets"
@@ -20,8 +20,8 @@ q-page
       )
         l-icon(
           :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
-          :icon-size="cabinet.status==='In Use' ? [100, 100] : [50, 50]"
-          :icon-anchor="cabinet.status==='In Use' ? [50, 50] : [25, 25]"
+          :icon-size="cabinet.status==='In Use' ? blueDotIconSize : greenDotIconSize"
+          :icon-anchor="cabinet.status==='In Use' ? blueDotIconAnchor : greenDotIconAnchor"
           :class-name="cabinet.status==='In Use' ? infinitePing : ping"
           )
       l-marker(
@@ -31,8 +31,8 @@ q-page
       )
         l-icon(
           :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
-          :icon-size="cabinet.status==='In Use' ? [100, 100] : [50, 50]"
-          :icon-anchor="cabinet.status==='In Use' ? [50, 50] : [25, 25]"
+          :icon-size="cabinet.status==='In Use' ? blueDotIconSize : greenDotIconSize"
+          :icon-anchor="cabinet.status==='In Use' ? blueDotIconAnchor : greenDotIconAnchor"
           :class-name="cabinet.status==='In Use' ? infinitePing2 : ping2"
           )
       l-marker(
@@ -42,8 +42,8 @@ q-page
       )
         l-icon(
           :icon-url="cabinet.status==='In Use' ? blueDotIcon : greenDotIcon"
-          :icon-size="[8, 8]"
-          :icon-anchor="[4, 4]"
+          :icon-size="centreIconSize"
+          :icon-anchor="centreIconAnchor"
           :class-name="icon"
           )
       l-control(position="topleft")
@@ -141,6 +141,12 @@ export default defineComponent({
       icon: 'icon',
       infinitePing: 'infinitePing',
       infinitePing2: 'infinitePing2',
+      blueDotIconSize: [100, 100],
+      greenDotIconSize: [50, 50],
+      blueDotIconAnchor: [50, 50],
+      greenDotIconAnchor: [25, 25],
+      centreIconSize: [8, 8],
+      centreIconAnchor: [4, 4],
       iconGroups: [
         {
           event: 'Door Closed',
