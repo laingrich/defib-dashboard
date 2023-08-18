@@ -4,7 +4,7 @@
       <q-toolbar>
 
         <q-toolbar-title>
-          Defib Dashboard - live updates across Cornwall of defibs monitored by DefibReady.com
+          Defib Dashboard
         </q-toolbar-title>
         <span class="q-pr-lg">Brought to you by Tango3 and Duchy Defibrillators</span>
       </q-toolbar>

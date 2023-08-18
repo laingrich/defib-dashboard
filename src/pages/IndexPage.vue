@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page
-  div(style="height:calc(100vh - 50px); width:100vw")
+  div(style="height:calc(100vh - 130px); width:100vw")
     l-map(
       ref="map"
       :zoom="zoom"
