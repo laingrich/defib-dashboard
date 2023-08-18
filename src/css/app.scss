@@ -14,6 +14,37 @@ body {
   color: #2196f3;
 }
 
+@media (max-width: 1024px) {
+  .q-px-xl.q-pt-lg.q-ml-md {
+      padding-left: 20px;
+      padding-right: 20px;
+  }
+  .q-timeline {
+      margin-left: 0;
+      padding-left: 0;
+  }
+  .text-h6 {
+      font-size: 1rem;
+  }
+  h6 {
+      font-size: 1rem;
+  }
+  .q-timeline__content {
+      padding-bottom: 0;
+  }
+  #events {
+      padding-left: 0;
+      padding-right: 0;
+  }
+  .q-pt-xl.q-px-xl {
+    padding-top: 32px;
+    padding-left: 0px;
+  }
+  .img {
+    width: 80%;
+  }
+}
+
 .list-enter-active {
   opacity: 0;
   transform: translateY(-30px);

@@ -62,7 +62,7 @@ q-page
           div(
             id="events"
             class="q-pt-lg q-pb-xl q-px-xl"
-            style="width: 350px")
+            style="width: 200px")
             .text-h6.q-my-sm Latest Events
             q-list.text
               transition-group(name="list" tag="div")
@@ -90,7 +90,7 @@ q-page
                   )
                     div(class="text-subtitle2") Total Defibs
           l-control(position="bottomright")
-            img(src="../assets/tango3-innovation-for-hire.png" style="width: 200px; height: 200px; opacity: 0.6")
+            img(src="../assets/tango3-innovation-for-hire.png" style="width: 150px; height: 150px; opacity: 0.6")
 </template>
 
 <script>
