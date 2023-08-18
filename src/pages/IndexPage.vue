@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page
-  div(style="height:calc(100vh - 130px); width:100vw")
+  div(class="viewHeight")
     l-map(
       ref="map"
       :zoom="zoom"
@@ -61,8 +61,7 @@ q-page
                   div {{ deployment.status }}
           div(
             id="events"
-            class="q-pt-lg q-pb-xl q-px-xl"
-            style="width: 200px")
+            class="q-pt-lg q-pb-xl q-px-xl")
             .text-h6.q-my-sm Latest Events
             q-list.text
               transition-group(name="list" tag="div")

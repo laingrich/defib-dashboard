@@ -1,21 +1,25 @@
 // app global css in SCSS form
-// app global css in SCSS form
-
 
 body {
   font-family: "QuickSand", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
 }
 
-.text-deployed {
-  color: #2196f3;
-}
-.bg-deployed {
+.text-deployed, .bg-deployed {
   color: #2196f3;
 }
 
+.viewHeight {
+  height: calc(100vh - 50px);
+  width: 100vw;
+}
+
+.q-pt-lg.q-pb-xl.q-px-xl {
+  width: 400px;
+}
+
+// Base styles for devices with retina display
 @media (min-resolution: 2dppx) {
-
   .q-px-xl.q-pt-lg.q-ml-md {
       padding-left: 20px;
       padding-right: 20px;
@@ -25,10 +29,7 @@ body {
       padding-left: 0;
       padding-top: 0;
   }
-  .text-h6 {
-      font-size: 1rem;
-  }
-  h6 {
+  .text-h6, h6 {
       font-size: 1rem;
   }
   .q-timeline__content {
@@ -43,6 +44,25 @@ body {
     padding-left: 0px;
   }
 }
+
+// layout on macbook 13" (with retina display)
+@media screen and (min-device-width: 1440) {
+  .q-pt-lg.q-pb-xl.q-px-xl {
+    width: 300px;
+  }
+}
+
+// layout for ipad air with retina display
+@media screen and (min-device-width: 820px) and (max-device-width: 1200px) {
+  .viewHeight {
+    height: calc(100vh - 130px);
+  }
+  .q-pt-lg.q-pb-xl.q-px-xl {
+    width: 200px;
+  }
+}
+
+// event list
 
 .list-enter-active {
   opacity: 0;
@@ -59,6 +79,7 @@ body {
   transition-delay: 4s;
   transition: all 2s ease;
 }
+// map and marker animation
 
 #map {
   position: absolute;
@@ -106,7 +127,7 @@ body {
     opacity: .4;
   }
   50% {
-    opacity: 3;
+    opacity: 1;
   }
   100% {
     opacity: .4;
