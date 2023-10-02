@@ -9,11 +9,6 @@ body {
   color: #2196f3;
 }
 
-.viewHeight {
-  height: calc(100vh - 50px);
-  width: 100vw;
-}
-
 .q-pt-lg.q-pb-xl.q-px-xl {
   width: 400px;
 }
@@ -53,10 +48,7 @@ body {
 }
 
 // layout for ipad air with retina display
-@media screen and (min-device-width: 820px) and (max-device-width: 1200px) {
-  .viewHeight {
-    height: calc(100vh - 130px);
-  }
+@media screen and (min-device-width: 810px) and (max-device-width: 1200px) {
   .q-pt-lg.q-pb-xl.q-px-xl {
     width: 200px;
   }

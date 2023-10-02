@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page
-  div(class="viewHeight")
+  div(:style="divStyle")
     l-map(
       ref="map"
       :zoom="zoom"
@@ -48,7 +48,10 @@ q-page
           )
       l-control(position="topleft")
         div.row.justify-start
-          div(class="q-px-xl q-pt-lg q-ml-md")
+          div(
+            class="q-px-xl q-pt-lg q-ml-md"
+            style="width: 500px"
+            )
             .text-h6.q-my-sm Recent Deployments
             q-timeline.text.q-mx-lg.q-pt-lg
               q-timeline-entry(
@@ -61,7 +64,8 @@ q-page
                   div {{ deployment.status }}
           div(
             id="events"
-            class="q-pt-lg q-pb-xl q-px-xl")
+            class="q-pt-lg q-pb-xl q-px-xl"
+            style="width: 400px")
             .text-h6.q-my-sm Latest Events
             q-list.text
               transition-group(name="list" tag="div")
@@ -122,6 +126,10 @@ export default defineComponent({
       return this.events.map((event) => {
         return this.iconGetter(event.event)
       })
+    },
+    divStyle () {
+      console.log(this.addressBarHeight)
+      return `height: calc(100vh - 50px - ${this.addressBarHeight}px)`
     }
   },
 
@@ -147,6 +155,11 @@ export default defineComponent({
       centreIconSize: [8, 8],
       centreIconAnchor: [4, 4],
       iconGroups: [
+        {
+          event: 'Temperature Alert - too cold',
+          icon: 'thermostat',
+          iconColor: 'blue'
+        },
         {
           event: 'Door Closed',
           icon: 'door_front',
@@ -183,11 +196,6 @@ export default defineComponent({
           iconColor: 'green'
         },
         {
-          event: 'Temperature Alert - too cold',
-          icon: 'thermostat',
-          iconColor: 'blue'
-        },
-        {
           event: 'Check Complete',
           icon: 'sentiment_satisfied',
           iconColor: 'green'
@@ -217,8 +225,18 @@ export default defineComponent({
           icon: 'favorite',
           iconColor: 'blue'
         }
-      ]
+      ],
+      addressBarHeight: 0
     }
+  },
+
+  created () {
+    window.addEventListener('resize', this.calculateAddressBarHeight)
+    this.calculateAddressBarHeight()
+  },
+
+  umnounted () {
+    window.removeEventListener('resize', this.calculateAddressBarHeight)
   },
 
   mounted () {
@@ -295,6 +313,11 @@ export default defineComponent({
       const { icon = 'favorite_border', iconColor = 'blue' } =
         this.iconGroups.find((group) => group.event === event) || {}
       return { icon, iconColor }
+    },
+    calculateAddressBarHeight () {
+      const vh = window.innerHeight
+      const dh = document.documentElement.clientHeight
+      this.addressBarHeight = Math.max(0, dh - vh)
     }
   }
 })
